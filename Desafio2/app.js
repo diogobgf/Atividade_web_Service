@@ -9,12 +9,12 @@ const porta: number = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Rota simples para raiz
+// Rota par Raiz
 app.get('/', (req: Request, res: Response) => {
     res.send('Bem vindo ao meu servidor!');
   });
 
-// inicializa o servidor
+// inicializa
 app.listen(porta, () => {
     console.log(`Servidor rodando em http://localhost:${porta}`);
     console.log(`Rota para listar todos os usuários: http://localhost:${porta}/users`);
@@ -32,13 +32,13 @@ const users = [
     { userId: 3, firstName: "Vitor", lastName: "Ferreira  " },
 ];
 
-// Rota para listar todos os usuários
+// Rota usuários
 app.get('/users', (req: Request, res: Response) => {
 // Lógica para obter e retornar todos os usuários
     res.status(200).json({ users });
 });
 
-// Rota para obter detalhes de um usuário pelo ID
+// Rota usuário pelo ID
 app.get("/users/:userId", (req: Request, res: Response) => {
     const user = users.find((l) => l.userId === parseInt(req.params.userId));  
     if (!user) {
@@ -47,13 +47,13 @@ app.get("/users/:userId", (req: Request, res: Response) => {
     res.status(200).json({usuario: `${user.userId} - ${user.firstName} ${user.lastName} - consulta concluída com sucesso`});
 });
 
-// Função para obter o próximo userId
+// Função 
 const getNextUserId = () => {
     const maxUserId = users.reduce((max, user) => (user.userId > max ? user.userId : max), 0);
     return maxUserId + 1;
 };
 
-// Rota para adicionar um novo usuário
+// Rota novo usuário
 app.post("/users", (req: Request, res: Response) => {
     const existingUser = users.find(user => 
         user.firstName === req.body.firstName && user.lastName === req.body.lastName
@@ -73,7 +73,7 @@ app.post("/users", (req: Request, res: Response) => {
     res.status(201).json({ mensagem: `${newUser.userId} - ${newUser.firstName} - ${newUser.lastName} - usuário cadastrado com sucesso` });
 });
 
-// Rota para saudação personalizada ao usuário com entrada do parâmetro nome
+// Rota para saudação
 app.get("/users/greet/:firstName", (req: Request, res: Response) => {
     const user = users.find((l) => l.firstName === (req.params.firstName));  
     for (let i: number = 0; i <= users.length; i++) {
